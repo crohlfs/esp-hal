@@ -34,6 +34,7 @@ peripherals = [
     "rtc_cntl",
     "rtc_i2c",
     "rtc_io",
+    "sdhost",
     "sens",
     "sensitive",
     "sha",
