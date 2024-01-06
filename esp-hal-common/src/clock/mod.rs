@@ -216,6 +216,8 @@ pub struct Clocks<'d> {
     pub pll_48m_clock: HertzU32,
     #[cfg(esp32h2)]
     pub pll_96m_clock: HertzU32,
+    #[cfg(esp32s3)]
+    pub sdmmc_clock: HertzU32,
     // TODO chip specific additional ones as needed
 }
 
@@ -246,6 +248,8 @@ impl<'d> Clocks<'d> {
             pll_48m_clock: raw_clocks.pll_48m_clock,
             #[cfg(esp32h2)]
             pll_96m_clock: raw_clocks.pll_96m_clock,
+            #[cfg(esp32s3)]
+            sdmmc_clock: raw_clocks.sdmmc_clock,
         }
     }
 }
@@ -267,6 +271,8 @@ pub struct RawClocks {
     pub pll_48m_clock: HertzU32,
     #[cfg(esp32h2)]
     pub pll_96m_clock: HertzU32,
+    #[cfg(esp32s3)]
+    pub sdmmc_clock: HertzU32,
     // TODO chip specific additional ones as needed
 }
 
@@ -648,6 +654,7 @@ impl<'d> ClockControl<'d> {
                 apb_clock: HertzU32::MHz(80),
                 xtal_clock: HertzU32::MHz(40),
                 crypto_pwm_clock: HertzU32::MHz(160),
+                sdmmc_clock: HertzU32::MHz(160),
             },
         }
     }
@@ -666,6 +673,7 @@ impl<'d> ClockControl<'d> {
                 apb_clock: HertzU32::MHz(80),
                 xtal_clock: HertzU32::MHz(40),
                 crypto_pwm_clock: HertzU32::MHz(160),
+                sdmmc_clock: HertzU32::MHz(160),
             },
         }
     }

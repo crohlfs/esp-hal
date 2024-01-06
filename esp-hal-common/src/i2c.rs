@@ -327,7 +327,7 @@ where
     }
 }
 
-#[cfg(feature = "async")]
+// #[cfg(feature = "async")]
 mod asynch {
     use core::{
         pin::Pin,

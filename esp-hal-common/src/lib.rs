@@ -31,6 +31,7 @@
     feature(impl_trait_projections)
 )]
 #![doc(html_logo_url = "https://avatars.githubusercontent.com/u/46717278")]
+#![feature(array_chunks)]
 
 // MUST be the first module
 mod fmt;
@@ -130,6 +131,7 @@ pub mod rom;
 pub mod rsa;
 #[cfg(any(lp_clkrst, rtc_cntl))]
 pub mod rtc_cntl;
+pub mod sdhost;
 #[cfg(sha)]
 pub mod sha;
 #[cfg(any(spi0, spi1, spi2, spi3))]

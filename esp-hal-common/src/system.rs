@@ -106,6 +106,7 @@ pub enum Peripheral {
     Etm,
     #[cfg(trace)]
     Trace,
+    SdHost,
 }
 
 pub struct SoftwareInterruptControl {
@@ -382,6 +383,12 @@ impl PeripheralClockControl {
             Peripheral::Ecc => {
                 perip_clk_en1.modify(|_, w| w.crypto_ecc_clk_en().set_bit());
                 perip_rst_en1.modify(|_, w| w.crypto_ecc_rst().clear_bit());
+            }
+            #[cfg(all(sdhost, esp32s3))]
+            Peripheral::SdHost => {
+                perip_clk_en1.modify(|_, w| w.sdio_host_clk_en().set_bit());
+                perip_rst_en1.modify(|_, w| w.sdio_host_rst().set_bit());
+                perip_rst_en1.modify(|_, w| w.sdio_host_rst().clear_bit());
             }
         });
     }
