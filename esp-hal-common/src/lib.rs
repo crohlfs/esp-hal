@@ -36,12 +36,12 @@
 // MUST be the first module
 mod fmt;
 
-#[cfg(riscv)]
+#[cfg(feature = "rt-riscv")]
 pub use esp_riscv_rt::{self, entry, riscv};
 pub use procmacros as macros;
 #[cfg(xtensa)]
 pub use xtensa_lx;
-#[cfg(xtensa)]
+#[cfg(feature = "rt-xtensa")]
 pub use xtensa_lx_rt::{self, entry};
 
 #[cfg(adc)]
@@ -105,7 +105,10 @@ pub mod hmac;
 pub mod i2c;
 #[cfg(any(i2s0, i2s1))]
 pub mod i2s;
-#[cfg(any(dport, interrupt_core0, interrupt_core1))]
+#[cfg(all(
+    any(dport, interrupt_core0, interrupt_core1),
+    any(feature = "rt-riscv", feature = "rt-xtensa")
+))]
 pub mod interrupt;
 #[cfg(ledc)]
 pub mod ledc;
@@ -152,6 +155,7 @@ pub mod uart;
 pub mod usb_serial_jtag;
 
 /// State of the CPU saved when entering exception or interrupt
+#[cfg(any(feature = "rt-riscv", feature = "rt-xtensa"))]
 pub mod trapframe {
     #[cfg(riscv)]
     pub use esp_riscv_rt::TrapFrame;
@@ -280,8 +284,6 @@ mod critical_section_impl {
 
     #[cfg(riscv)]
     mod riscv {
-        use esp_riscv_rt::riscv;
-
         #[cfg(multi_core)]
         // The restore state is a u8 that is casted from a bool, so it has a value of
         // 0x00 or 0x01 before we add the reentry flag to it.

@@ -40,7 +40,7 @@ pub struct Efuse;
 
 impl Efuse {
     /// Reads chip's MAC address from the eFuse storage.
-    pub fn get_mac_address() -> [u8; 6] {
+    pub fn read_base_mac_address() -> [u8; 6] {
         Self::read_field_be(MAC_FACTORY)
     }
 
@@ -136,6 +136,24 @@ impl Efuse {
         };
 
         Some(cal_code)
+    }
+
+    /// Returns the major hardware revision
+    pub fn major_chip_version() -> u8 {
+        Self::read_field_le(WAFER_VERSION_MAJOR)
+    }
+
+    /// Returns the minor hardware revision
+    pub fn minor_chip_version() -> u8 {
+        Self::read_field_le(WAFER_VERSION_MINOR)
+    }
+
+    /// Returns the hardware revision
+    ///
+    /// The chip version is calculated using the following
+    /// formula: MAJOR * 100 + MINOR. (if the result is 1, then version is v0.1)
+    pub fn chip_revision() -> u16 {
+        Self::major_chip_version() as u16 * 100 + Self::minor_chip_version() as u16
     }
 }
 
