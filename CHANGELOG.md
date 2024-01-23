@@ -7,7 +7,19 @@ Please note that only changes to the `esp-hal-common` package are tracked in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-[Unreleased]
+## [Unreleased]
+
+### Added
+
+- Add initial support for the ESP32-P4 (#1101)
+
+### Fixed
+
+### Changed
+
+### Removed
+
+## [0.15.0] - 2024-01-19
 
 ### Added
 
@@ -15,21 +27,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implement overriding base mac address (#1044)
 - Add `rt-riscv` and `rt-xtensa` features to enable/disable runtime support (#1057)
 - ESP32-C6: Implement deep sleep (#918)
+- Add `embedded-io` feature to each chip-specific HAL (#1072)
+- Add `embassy-time-driver` to `esp-hal-common` due to updating `embassy-time` to `v0.3.0` (#1075)
+- ESP32-S3: Added support for 80Mhz PSRAM (#1069)
+- ESP32-C3/S3: Add workaround for USB pin exchange on usb-serial-jtag (#1104).
 
 ### Changed
+
+- Set up interrupts for the DMA and async enabled peripherals only when `async` feature is provided (#1042)
+- Update to `1.0.0` releases of the `embedded-hal-*` packages (#1068)
+- Update `embassy-time` to `0.3.0` and embassy-executor to `0.5.0` release due to the release of the `embedded-hal-*` packages (#1075)
+- No longer depend on `embassy-time` (#1092)
+- Update to latest `smart-leds-trait` and `smart-leds` packages (#1094)
 
 ### Fixed
 
 - ESP32: correct gpio 32/33 in errata36() (#1053)
+- ESP32: make gpio 4 usable as analog pin (#1078)
+- Fix double &mut for the `SetDutyCycle` impl on `PwmPin` (#1033)
+- ESP32/ESP32-S3: Fix stack-top calculation for app-core (#1081)
+- ESP32/ESP32-S2/ESP32-S3: Fix embassy-time-timg0 driver (#1091)
+- ESP32: ADC readings are no longer inverted (#1093)
 
 ### Removed
+
+### Breaking
+
+- Unify the low-power peripheral names (`RTC_CNTL` and `LP_CLKRST` to `LPWR`) (#1064)
 
 ## [0.14.1] - 2023-12-13
 
 ### Fixed
 
 - Fix SHA for all targets (#1021)
-- Fix double &mut for the `SetDutyCycle` impl on `PwmPin` (#1033)
 
 ## [0.14.0] - 2023-12-12
 
@@ -60,7 +90,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated to latest release candidate (`1.0.0-rc.2`) for `embedded-hal{-async,-nb}` (#994)
 - Explicit panic when hitting the `DefaultHandler` (#1005)
 - Relevant interrupts are now auto enabled in `embassy::init` (#1014).
-- Set up interrupts for the DMA and async enabled peripherals only when `async` feature is provided (#1042)
 
 ### Fixed
 
@@ -367,7 +396,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2022-08-05
 
-[Unreleased]: https://github.com/esp-rs/esp-hal/compare/v0.14.1...HEAD
+[Unreleased]: https://github.com/esp-rs/esp-hal/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/esp-rs/esp-hal/compare/v0.14.1...v0.15.0
 [0.14.1]: https://github.com/esp-rs/esp-hal/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/esp-rs/esp-hal/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/esp-rs/esp-hal/compare/v0.13.0...v0.13.1
